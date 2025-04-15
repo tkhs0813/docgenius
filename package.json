@@ -10,9 +10,7 @@
   },
   "type": "module",
   "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -28,7 +26,8 @@
     "lint": "eslint . --ext .ts --max-warnings=0",
     "format": "prettier --write \"**/*.{ts,js,json,md}\" && eslint . --ext .ts --fix",
     "typecheck": "tsc --noEmit",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "prepublishOnly": "node -e \"const fs=require('fs');fs.chmodSync('dist/index.js','755')\""
   },
   "release": {
     "branches": [
