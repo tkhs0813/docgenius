@@ -20,7 +20,7 @@
   "description": "AI-powered documentation generator for your codebase",
   "scripts": {
     "dev": "tsx ./src/index.ts",
-    "build": "tsup",
+    "build": "tsup && tsc --emitDeclarationOnly --outDir dist",
     "watch": "tsup --watch",
     "lint": "eslint . --ext .ts --max-warnings=0",
     "format": "prettier --write \"**/*.{ts,js,json,md}\" && eslint . --ext .ts --fix",
