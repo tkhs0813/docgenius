@@ -1,0 +1,57 @@
+{
+  "name": "docgenius",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tkhs0813/docgenius.git"
+  },
+  "author": "tkhs0813",
+  "license": "MIT",
+  "description": "AI-powered documentation generator for your codebase",
+  "scripts": {
+    "dev": "tsx ./src/index.ts",
+    "build": "tsup",
+    "watch": "tsup --watch",
+    "lint": "eslint . --ext .ts --max-warnings=0",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\" && eslint . --ext .ts --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "documentation",
+    "generator",
+    "ai",
+    "development",
+    "guide",
+    "markdown"
+  ],
+  "dependencies": {
+    "@google/genai": "^0.7.0",
+    "citty": "^0.1.6",
+    "consola": "^3.4.2",
+    "glob": "^11.0.1",
+    "mermaid": "^11.6.0",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@typescript-eslint/eslint-plugin": "^8.29.0",
+    "@typescript-eslint/parser": "^8.29.0",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.6",
+    "jsdom": "^26.0.0",
+    "prettier": "^3.5.3",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.3"
+  }
+}
