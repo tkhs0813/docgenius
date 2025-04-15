@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/tkhs0813/docgenius/compare/v1.2.0...v1.3.0) (2025-04-15)
+
+
+### Features
+
+* support en ([7cf6c30](https://github.com/tkhs0813/docgenius/commit/7cf6c3001f57bfadbe45771911046c6eac507d90))
+
 # [1.2.0](https://github.com/tkhs0813/docgenius/compare/v1.1.0...v1.2.0) (2025-04-15)
 
 
