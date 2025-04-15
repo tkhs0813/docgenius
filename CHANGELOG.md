@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/tkhs0813/docgenius/compare/v1.1.0...v1.2.0) (2025-04-15)
+
+
+### Features
+
+* first release ([c4ea848](https://github.com/tkhs0813/docgenius/commit/c4ea848b8a596ca0845038d32df1a78d2dfcd410))
+
 # [1.1.0](https://github.com/tkhs0813/docgenius/compare/v1.0.0...v1.1.0) (2025-04-15)
 
 
