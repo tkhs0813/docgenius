@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/tkhs0813/docgenius/compare/v1.3.0...v1.3.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* args ([e83b29a](https://github.com/tkhs0813/docgenius/commit/e83b29ae65b07b5c80565441cdc06f0e445131d7))
+
 # [1.3.0](https://github.com/tkhs0813/docgenius/compare/v1.2.0...v1.3.0) (2025-04-15)
 
 
