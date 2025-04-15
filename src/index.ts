@@ -27,15 +27,24 @@ const main = defineCommand({
       description: 'The output directory',
       default: './output',
     },
+    language: {
+      type: 'positional',
+      description: 'Output language (en or ja)',
+      default: 'en',
+    },
   },
   async run({ args }) {
     try {
       consola.start('Starting DocGenius...');
 
-      const config = await loadConfig(args);
+      const config = await loadConfig({
+        apiKey: args.apiKey,
+        output: args.output,
+        language: args.language as 'en' | 'ja',
+      });
       const files = await findFiles('./', config);
       const model = await getModel(config);
-      const docGenerator = await getDevelopmentGuideGenerator(model);
+      const docGenerator = await getDevelopmentGuideGenerator(model, config);
 
       let developmentDoc: string | undefined;
 

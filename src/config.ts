@@ -4,6 +4,7 @@ export type Config = {
   maxFiles: number;
   apiKey: string;
   output: string;
+  language: 'en' | 'ja';
 };
 
 const defaultConfig: Config = {
@@ -82,12 +83,18 @@ const defaultConfig: Config = {
   maxFiles: 1000,
   apiKey: '',
   output: '',
+  language: 'en',
 };
 
-export function loadConfig(args: { apiKey: string; output: string }): Config {
+export function loadConfig(args: {
+  apiKey: string;
+  output: string;
+  language?: 'en' | 'ja';
+}): Config {
   return {
     ...defaultConfig,
     apiKey: args.apiKey,
     output: args.output,
+    language: args.language || 'en',
   };
 }

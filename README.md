@@ -1,46 +1,56 @@
 # DocGenius
 
-DocGeniusは、コードベースを分析して自動的に開発ドキュメントを生成するCLIツールです。Google GenAI（Gemini）を使用して、コードの構造を理解し、開発者向けの包括的なドキュメントを生成します。
+AI-powered documentation generator for your codebase.
 
-## 特徴
+## Features
 
-- コードベースの自動分析
-- 開発者向けドキュメントの自動生成
-- プロジェクト構造の可視化
-- カスタマイズ可能な設定
-- TypeScriptで実装された堅牢なコードベース
-- Gemini 2.5 Proモデルを使用した高精度な分析
+- Automatically generates comprehensive documentation for your codebase
+- Supports multiple programming languages and frameworks
+- Generates both development guides and setup guides
+- Supports English and Japanese output
+- Uses Google's Gemini 2.5 Pro model for high-quality documentation
 
-## 必要条件
+## Usage
 
-- Node.js 20以上
-- npm または yarn
-- Google GenAI APIキー（Gemini 2.5 Proモデルへのアクセス権限が必要）
-
-## 使用方法
-
-1. Google GenAI APIキーを取得（Gemini 2.5 Proモデルへのアクセス権限が必要）
-2. 以下のコマンドを実行：
+Basic usage:
 
 ```bash
-npx docgenius YOUR-API-KEY
+npx docgenius <api-key> <output-directory>
 ```
 
-## 出力
+With language selection:
 
-生成されたドキュメントは以下のような内容を含みます：
+```bash
+# English (default)
+npx docgenius <api-key> <output-directory>
 
-- 開発環境のセットアップ方法
-- プロジェクト構造の説明
-- 開発ワークフローの説明
-- コーディング規約
-- デバッグ方法
-- テスト方法
-- ビルドとデプロイメントの手順
+# Japanese
+npx docgenius <api-key> <output-directory> ja
+```
 
-## 開発
+### Arguments
 
-### セットアップ
+- `api-key`: Your Google GenAI API key
+- `output-directory`: Directory where the generated documentation will be saved
+- `language`: Output language (optional, default: 'en')
+  - `en`: English
+  - `ja`: Japanese
+
+## Output
+
+The tool generates two main documents:
+
+1. `development.md`: Comprehensive development guide
+2. `setup.md`: Setup and installation guide
+
+## Requirements
+
+- Node.js v20 or later
+- Google GenAI API key
+
+## Development
+
+### Setup
 
 ```bash
 git clone https://github.com/your-username/docgenius.git
@@ -48,31 +58,31 @@ cd docgenius
 npm install
 ```
 
-### 開発サーバーの起動
+### Starting Development Server
 
 ```bash
 npm run dev --apikey YOUR-API-KEY
 ```
 
-## 制限事項
+## Limitations
 
-- 現在、Gemini 2.5 Proモデルのみをサポートしています
-- 他のAIモデルやバージョンには対応していません
+- Currently only supports Gemini 2.5 Pro model
+- Does not support other AI models or versions
 
-## ライセンス
+## Contributing
 
-MIT License
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 貢献
+## Acknowledgments
 
-1. このリポジトリをフォーク
-2. 新しいブランチを作成 (`git checkout -b feature/amazing-feature`)
-3. 変更をコミット (`git commit -m 'Add some amazing feature'`)
-4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
-5. プルリクエストを作成
-
-## 謝辞
-
-- Google GenAI（特にGemini 2.5 Pro）
+- Google GenAI (especially Gemini 2.5 Pro)
 - Mermaid.js
-- その他の依存ライブラリの作者
+- Authors of other dependency libraries
+
+## License
+
+MIT

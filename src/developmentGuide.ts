@@ -1,3 +1,4 @@
+import type { Config } from './config';
 import type { File } from './file';
 import type { Model } from './model';
 
@@ -7,11 +8,12 @@ export interface DevelopmentGuideGenerator {
 }
 
 export async function getDevelopmentGuideGenerator(
-  model: Model
+  model: Model,
+  config: Config
 ): Promise<DevelopmentGuideGenerator> {
   return {
     generateDevelopmentGuide: async (files: File[]) => {
-      const prompt = createDevelopmentGuidePrompt(files);
+      const prompt = createDevelopmentGuidePrompt(files, config.language);
       const response = await model.generate(prompt);
       if (!response) {
         throw new Error('No response from model');
@@ -19,7 +21,7 @@ export async function getDevelopmentGuideGenerator(
       return normalizeMarkdownOutput(response);
     },
     generateSetupGuide: async (files: File[]) => {
-      const prompt = createSetupGuidePrompt(files);
+      const prompt = createSetupGuidePrompt(files, config.language);
       const response = await model.generate(prompt);
       if (!response) {
         throw new Error('No response from model');
@@ -29,31 +31,14 @@ export async function getDevelopmentGuideGenerator(
   };
 }
 
-function normalizeMarkdownOutput(content: string): string {
-  // ```markdown で囲まれている場合、その部分を抽出
-  const markdownBlockMatch = content.match(/```markdown\n([\s\S]*?)\n```/);
-  if (markdownBlockMatch) {
-    return markdownBlockMatch[1].trim();
-  }
-
-  // ``` で囲まれている場合、その部分を抽出
-  // console.log(content);
-  // const codeBlockMatch = content.match(/```\n([\s\S]*?)\n```/);
-  // if (codeBlockMatch) {
-  //   return codeBlockMatch[1].trim();
-  // }
-
-  // 囲まれていない場合はそのまま返す
-  return content.trim();
-}
-
-function createDevelopmentGuidePrompt(files: File[]): string {
+function createDevelopmentGuidePrompt(files: File[], language: 'en' | 'ja'): string {
   const FILE_SEPARATOR = '==========';
   const filesContents = files
     .map(file => `${file.path}\n${file.content}\n${FILE_SEPARATOR}`)
     .join('\n');
 
-  return `あなたは熟練したソフトウェアエンジニアです。
+  if (language === 'ja') {
+    return `あなたは熟練したソフトウェアエンジニアです。
 以下のコードベースを分析し、開発者向けのドキュメントを生成してください。
 
 **要件:**
@@ -110,95 +95,77 @@ function createDevelopmentGuidePrompt(files: File[]): string {
 5. 図は高レベルのものであり、詳細すぎないこと。
 
 **コードファイル:**
-${filesContents}
+${filesContents}`;
+  } else {
+    return `You are an expert software engineer.
+Please analyze the following codebase and generate developer documentation.
 
-**出力例:**
-# システム名 開発ドキュメント
+**Requirements:**
+1. Development Environment Setup
+   - Required tools and versions
+   - Environment setup procedures
+   - Recommended development tools
 
-## 1. 開発環境
-- 必要なツールとバージョン
-- 環境構築手順
-- 推奨する開発ツール
+2. Project Structure and Key Files
+   - Directory structure explanation
+   - Key file roles
+   - Configuration file explanations
 
-## 2. プロジェクト構造
-\`\`\`
-プロジェクト名/
-├── src/                    # メインのソースコードが格納されるディレクトリ
-│   ├── core/              # アプリケーションのコアロジック
-│   ├── tests/             # ユニットテストと統合テスト
-│   └── config/            # 環境設定とアプリケーション設定
-├── docs/                   # プロジェクトのドキュメント
-├── scripts/               # ビルドやデプロイメント用のスクリプト
-└── package.json           # プロジェクトの依存関係とスクリプト
-\`\`\`
+3. Development Workflow and Process
+   - Branch strategy
+   - Commit conventions
+   - Review process
 
-## 3. 開発ワークフロー
-\`\`\`mermaid
-sequenceDiagram
-    actor Dev as 開発者
-    participant CI as CI/CD
-    participant Review as レビュアー
-    participant Main as mainブランチ
+4. Coding Standards and Best Practices
+   - Naming conventions
+   - Code formatting
+   - Documentation standards
 
-    Dev->>Dev: 新機能開発開始
-    Dev->>Dev: ローカルで開発・テスト
-    Dev->>CI: プルリクエスト作成
-    CI->>CI: 自動テスト実行
-    alt テスト失敗
-        CI-->>Dev: テスト結果通知
-        Dev->>Dev: 修正作業
-    else テスト成功
-        CI-->>Review: レビュー依頼
-        Review->>Review: コードレビュー
-        alt レビューNG
-            Review-->>Dev: 修正依頼
-            Dev->>Dev: 修正作業
-        else レビューOK
-            Review->>Main: マージ承認
-            Main->>CI: マージトリガー
-            CI->>CI: デプロイメント
-            CI-->>Dev: 完了通知
-        end
-    end
-\`\`\`
+5. Debugging and Troubleshooting
+   - Log checking methods
+   - Debug tool usage
+   - Common issue resolution
 
-各ステップの説明：
-1. **開発開始**: 新機能開発の開始
-2. **ローカル開発**: 開発環境での実装とテスト
-3. **プルリクエスト**: 変更内容の提出
-4. **CI/CD**: 自動テストの実行
-5. **コードレビュー**: チームメンバーによるレビュー
-6. **マージとデプロイ**: 承認後のマージとデプロイ
+6. Testing Methods and Strategy
+   - Test types and purposes
+   - Test execution methods
+   - Test coverage requirements
 
-## 4. コーディング規約
-- 命名規則
-- コードフォーマット
-- ドキュメント規約
+7. Build and Deployment
+   - Build process
+   - Deployment flow
+   - Environment-specific settings
 
-## 5. デバッグ方法
-- ログの確認方法
-- デバッグツールの使用方法
-- 一般的な問題の解決方法
+**Output Format:**
+- Output in GitHub-compatible markdown format
+- Use appropriate heading levels
+- Format code blocks properly
+- Output directory structure in tree format
+- Use sequenceDiagram for development workflows
+- Use Mermaid.js format for diagrams when needed
+- Output only markdown content without additional explanations
+- Do not wrap the entire output in \`\`\`markdown\`\`\` or \`\`\`\`\`\`
 
-## 6. テスト
-- テストの種類と目的
-- テストの実行方法
-- テストカバレッジの要件
+**Mermaid.js Syntax Rules:**
+1. Use mermaid.js syntax for diagrams
+2. Use subgraph feature to create hierarchical structures
+3. Avoid using the same name for subgraph and its nodes (to prevent cycles)
+4. Do not include {}:() characters in output (important)
+5. Keep diagrams high-level, not too detailed
 
-## 7. ビルドとデプロイ
-- ビルドプロセス
-- デプロイメントフロー
-- 環境ごとの設定
-`;
+**Code Files:**
+${filesContents}`;
+  }
 }
 
-function createSetupGuidePrompt(files: File[]): string {
+function createSetupGuidePrompt(files: File[], language: 'en' | 'ja'): string {
   const FILE_SEPARATOR = '==========';
   const filesContents = files
     .map(file => `${file.path}\n${file.content}\n${FILE_SEPARATOR}`)
     .join('\n');
 
-  return `あなたは熟練したソフトウェアエンジニアです。
+  if (language === 'ja') {
+    return `あなたは熟練したソフトウェアエンジニアです。
 以下のコードベースを分析し、セットアップガイドを生成してください。
 
 **要件:**
@@ -238,73 +205,52 @@ function createSetupGuidePrompt(files: File[]): string {
 - 出力全体を\`\`\`markdown\`\`\`や\`\`\`\`\`\`で囲まないこと
 
 **コードファイル:**
-${filesContents}
+${filesContents}`;
+  } else {
+    return `You are an expert software engineer.
+Please analyze the following codebase and generate a setup guide.
 
-**出力例:**
-# プロジェクト名 セットアップガイド
+**Requirements:**
+1. Automatic Environment Requirements Extraction
+   - Required runtime environments (Node.js, Python, etc.)
+   - Required packages and libraries
+   - Required external services (API keys, etc.)
+   - Required hardware specifications
 
-## 1. 環境要件
+2. Installation Procedure Generation
+   - Repository cloning method
+   - Dependency installation method
+   - Build procedure
+   - Initial configuration steps
 
-### 1.1 必要なソフトウェア
-- 必要なランタイム環境（例：Node.js、Python、Java等）
-- 必要なパッケージマネージャー（例：npm、yarn、pip等）
-- 必要な外部APIキー（存在する場合）
+3. Development Process
+   - Branch strategy
+   - Pull request workflow
+   - Code review process
+   - Test strategy
+   - CI/CD pipeline explanation (analyzing .github/workflows/ directory)
+   - Release process (if package publication is required)
 
-### 1.2 必要な外部サービス
-- 必要な外部APIやサービス（存在する場合）
+**Important Notes:**
+- If CI/CD configuration files (.github/workflows/) do not exist, clearly state this and explain that configuration is needed
+- Accurately reflect the actual project state
+- Use information extracted from the actual codebase, not generic examples
+- Include only necessary sections based on project type
+  - Example: Web apps don't need release process
+  - Example: Libraries need package publication steps
 
-## 2. インストール手順
+**Output Format:**
+- Output in GitHub-compatible markdown format
+- Use appropriate heading levels
+- Format code blocks properly
+- Output only markdown content without additional explanations
+- Do not wrap the entire output in \`\`\`markdown\`\`\` or \`\`\`\`\`\`
 
-### 2.1 リポジトリのクローン
-\`\`\`bash
-git clone <リポジトリのURL>
-cd <プロジェクトディレクトリ>
-\`\`\`
+**Code Files:**
+${filesContents}`;
+  }
+}
 
-### 2.2 依存関係のインストール
-\`\`\`bash
-<パッケージマネージャー> install
-\`\`\`
-
-## 3. 開発プロセス
-
-### 3.1 ブランチ戦略
-- \`main\`: 本番環境用のブランチ
-- \`develop\`: 開発用のブランチ
-- \`feature/*\`: 新機能開発用のブランチ
-- \`bugfix/*\`: バグ修正用のブランチ
-- \`release/*\`: リリース準備用のブランチ
-
-### 3.2 プルリクエストのワークフロー
-1. 新しいブランチを作成
-2. 変更を加える
-3. テストを実行
-4. プルリクエストを作成
-5. コードレビューを受ける
-6. 変更を反映
-7. マージ
-
-### 3.3 コードレビューのプロセス
-- コードの品質チェック
-- テストの確認
-- ドキュメントの更新確認
-- パフォーマンスの確認
-
-### 3.4 テスト戦略
-- ユニットテスト
-- 統合テスト
-- E2Eテスト
-- パフォーマンステスト
-
-### 3.5 CI/CDパイプライン
-- テスト実行用のワークフローファイル
-- ビルド用のワークフローファイル
-- デプロイメント用のワークフローファイル
-
-### 3.6 リリースプロセス（必要な場合のみ）
-1. バージョン番号の更新
-2. CHANGELOG.mdの更新
-3. タグの作成
-4. パッケージの公開（必要な場合）
-`;
+function normalizeMarkdownOutput(markdown: string): string {
+  return markdown.trim();
 }
