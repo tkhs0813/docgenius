@@ -1,6 +1,7 @@
 {
   "name": "docgenius",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
+  "private": false,
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -23,7 +24,20 @@
     "watch": "tsup --watch",
     "lint": "eslint . --ext .ts --max-warnings=0",
     "format": "prettier --write \"**/*.{ts,js,json,md}\" && eslint . --ext .ts --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "semantic-release": "semantic-release"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ]
   },
   "keywords": [
     "documentation",
@@ -42,6 +56,8 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@types/node": "^22.14.0",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",
@@ -51,6 +67,7 @@
     "eslint-plugin-prettier": "^5.2.6",
     "jsdom": "^26.0.0",
     "prettier": "^3.5.3",
+    "semantic-release": "^24.2.3",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3"
   }
