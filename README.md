@@ -2,6 +2,12 @@
 
 AI-powered documentation generator for your codebase.
 
+## Example Output
+
+The generated documentation will be saved in the output directory. For example:
+
+- [Example](./output)
+
 ## Features
 
 - Automatically generates comprehensive documentation for your codebase
@@ -15,23 +21,30 @@ AI-powered documentation generator for your codebase.
 Basic usage:
 
 ```bash
-npx docgenius <api-key> <output-directory>
+npx docgenius --apiKey YOUR_API_KEY
+```
+
+Change output directory:
+
+```bash
+# default ./output
+npx docgenius --apiKey YOUR_API_KEY --output ./docgenius-output
 ```
 
 With language selection:
 
 ```bash
 # English (default)
-npx docgenius <api-key> <output-directory>
+npx docgenius --apiKey YOUR_API_KEY
 
 # Japanese
-npx docgenius <api-key> <output-directory> ja
+npx docgenius --apiKey YOUR_API_KEY --language ja
 ```
 
 ### Arguments
 
-- `api-key`: Your Google GenAI API key
-- `output-directory`: Directory where the generated documentation will be saved
+- `apiKey`: Your Google GenAI API key
+- `output`: Directory where the generated documentation will be saved
 - `language`: Output language (optional, default: 'en')
   - `en`: English
   - `ja`: Japanese
@@ -41,7 +54,6 @@ npx docgenius <api-key> <output-directory> ja
 The tool generates two main documents:
 
 1. `development.md`: Comprehensive development guide
-2. `setup.md`: Setup and installation guide
 
 ## Requirements
 
