@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/tkhs0813/docgenius/compare/v1.0.0...v1.1.0) (2025-04-15)
+
+
+### Features
+
+* add bin entry for docgenius ([ef99829](https://github.com/tkhs0813/docgenius/commit/ef998291cf9116db36af65f996f7cc9cfc339792))
+
 # 1.0.0 (2025-04-15)
 
 
