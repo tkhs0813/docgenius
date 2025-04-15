@@ -17,28 +17,14 @@ DocGeniusは、コードベースを分析して自動的に開発ドキュメ�
 - npm または yarn
 - Google GenAI APIキー（Gemini 2.5 Proモデルへのアクセス権限が必要）
 
-## インストール
-
-```bash
-npm install -g docgenius
-```
-
 ## 使用方法
 
 1. Google GenAI APIキーを取得（Gemini 2.5 Proモデルへのアクセス権限が必要）
 2. 以下のコマンドを実行：
 
 ```bash
-docgenius YOUR-API-KEY
+npx docgenius YOUR-API-KEY
 ```
-
-## 設定
-
-`config.ts`で以下の設定をカスタマイズできます：
-
-- `fileExtensions`: 分析対象のファイル拡張子
-- `excludePatterns`: 除外するパターン
-- `maxFiles`: 最大ファイル数
 
 ## 出力
 
