@@ -20,7 +20,7 @@
   "license": "MIT",
   "description": "AI-powered documentation generator for your codebase",
   "scripts": {
-    "dev": "tsx ./src/index.ts",
+    "dev": "tsx ./src/index.ts --apiKey aaa",
     "build": "tsup && tsc --emitDeclarationOnly --outDir dist",
     "watch": "tsup --watch",
     "lint": "eslint . --ext .ts --max-warnings=0",

@@ -18,17 +18,17 @@ const main = defineCommand({
   },
   args: {
     apiKey: {
-      type: 'positional',
+      type: 'string',
       description: 'Your API key',
       required: true,
     },
     output: {
-      type: 'positional',
+      type: 'string',
       description: 'The output directory',
       default: './output',
     },
     language: {
-      type: 'positional',
+      type: 'string',
       description: 'Output language (en or ja)',
       default: 'en',
     },
