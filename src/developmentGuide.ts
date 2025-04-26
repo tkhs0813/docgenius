@@ -18,7 +18,7 @@ export async function getDevelopmentGuideGenerator(
       if (!response) {
         throw new Error('No response from model');
       }
-      return normalizeMarkdownOutput(response);
+      return normalizeMarkdownOutput(response.text);
     },
     generateSetupGuide: async (files: File[]) => {
       const prompt = createSetupGuidePrompt(files, config.language);
@@ -26,7 +26,7 @@ export async function getDevelopmentGuideGenerator(
       if (!response) {
         throw new Error('No response from model');
       }
-      return normalizeMarkdownOutput(response);
+      return normalizeMarkdownOutput(response.text);
     },
   };
 }
@@ -202,7 +202,6 @@ function createSetupGuidePrompt(files: File[], language: 'en' | 'ja'): string {
 - 見出しレベルを適切に使用
 - コードブロックは適切にフォーマット
 - 出力はマークダウンの内容のみとし、追加の説明やテキストを含めないこと
-- 出力全体を\`\`\`markdown\`\`\`や\`\`\`\`\`\`で囲まないこと
 
 **コードファイル:**
 ${filesContents}`;
@@ -244,7 +243,6 @@ Please analyze the following codebase and generate a setup guide.
 - Use appropriate heading levels
 - Format code blocks properly
 - Output only markdown content without additional explanations
-- Do not wrap the entire output in \`\`\`markdown\`\`\` or \`\`\`\`\`\`
 
 **Code Files:**
 ${filesContents}`;

@@ -73,7 +73,7 @@ npm install
 ### Starting Development Server
 
 ```bash
-npm run dev --apikey YOUR-API-KEY
+tsx ./src/index.ts --apikey YOUR-API-KEY
 ```
 
 ## Limitations
